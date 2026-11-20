@@ -7,7 +7,7 @@ from tkinter import ttk, messagebox, filedialog
 
 
 class AppEstudiantes:
-    """App Estudiantes"""
+    """Configuración visual"""
     COLOR_FONDO = "#f4f6fb"
     COLOR_PRIMARIO = "#2f5bea"
     COLOR_PRIMARIO_HOVER = "#1e43c4"
@@ -20,7 +20,7 @@ class AppEstudiantes:
     FUENTE_TITULO = ("Segoe UI", 14, "bold")
 
     def __init__(self, root, gestor):
-        """Para registro de estudiantes"""
+        """Conecta la ventana a gestor"""
         self.root = root
         self.gestor = gestor
 
@@ -30,7 +30,7 @@ class AppEstudiantes:
         self.construir_ventana_principal()
 
     def configurar_estilos(self, win):
-        """Configura"""
+        """Configura la apariencia"""
         win.configure(bg=self.COLOR_FONDO)
         estilo = ttk.Style(win)
         estilo.theme_use("clam")
@@ -64,6 +64,7 @@ class AppEstudiantes:
 
     @staticmethod
     def centrar(win, ancho, alto):
+        """Centra las ventanas en el monitor"""
         x = (win.winfo_screenwidth() - ancho) // 2
         y = (win.winfo_screenheight() - alto) // 2
         win.geometry(f"{ancho}x{alto}+{x}+{y}")
