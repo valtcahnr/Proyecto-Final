@@ -1,12 +1,13 @@
-""""Interfaz"""
+"""Interfaz."""
 
-#La vista
+# La vista
 
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 
 
 class AppEstudiantes:
+    """App Estudiantes"""
     COLOR_FONDO = "#f4f6fb"
     COLOR_PRIMARIO = "#2f5bea"
     COLOR_PRIMARIO_HOVER = "#1e43c4"
@@ -19,6 +20,7 @@ class AppEstudiantes:
     FUENTE_TITULO = ("Segoe UI", 14, "bold")
 
     def __init__(self, root, gestor):
+        """Para registro de estudiantes"""
         self.root = root
         self.gestor = gestor
 
@@ -28,12 +30,17 @@ class AppEstudiantes:
         self.construir_ventana_principal()
 
     def configurar_estilos(self, win):
+        """Configura"""
         win.configure(bg=self.COLOR_FONDO)
         estilo = ttk.Style(win)
         estilo.theme_use("clam")
 
-        estilo.configure(".", background=self.COLOR_FONDO, foreground=self.COLOR_TEXTO, font=self.FUENTE)
-        estilo.configure("Titulo.TLabel", font=self.FUENTE_TITULO, foreground=self.COLOR_TITULO)
+        estilo.configure(".", background=self.COLOR_FONDO, 
+                         foreground=self.COLOR_TEXTO, 
+                         font=self.FUENTE)
+        estilo.configure("Titulo.TLabel", 
+                         font=self.FUENTE_TITULO, 
+                         foreground=self.COLOR_TITULO)
 
         estilo.configure(
             "TButton",
@@ -43,10 +50,14 @@ class AppEstudiantes:
             borderwidth=0,
             focuscolor=self.COLOR_PRIMARIO,
         )
-        estilo.map("TButton", background=[("active", self.COLOR_PRIMARIO_HOVER)])
+        estilo.map("TButton", 
+                   background=[("active", 
+                                self.COLOR_PRIMARIO_HOVER)])
 
         estilo.configure("Peligro.TButton", background=self.COLOR_PELIGRO)
-        estilo.map("Peligro.TButton", background=[("active", self.COLOR_PELIGRO_HOVER)])
+        estilo.map("Peligro.TButton", 
+                   background=[("active", 
+                                self.COLOR_PELIGRO_HOVER)])
 
         estilo.configure("TEntry", padding=6)
         estilo.configure("TCombobox", padding=6)
