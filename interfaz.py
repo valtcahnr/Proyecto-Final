@@ -70,6 +70,7 @@ class AppEstudiantes:
         win.geometry(f"{ancho}x{alto}+{x}+{y}")
 
     def crear_ventana(self, padre, titulo, ancho, alto):
+        """Para las ventanas sin estar repitiendo la configuración"""
         win = tk.Toplevel(padre)
         win.title(titulo)
         win.configure(bg=self.COLOR_FONDO)
@@ -78,31 +79,59 @@ class AppEstudiantes:
 
     @staticmethod
     def mostrar_datos(frame, alumno):
-        ttk.Label(frame, text=f"ID: {alumno['id']}").pack(anchor="w", pady=2)
-        ttk.Label(frame, text=f"Nombre: {alumno['nombre']}").pack(anchor="w", pady=2)
-        ttk.Label(frame, text=f"Carrera: {alumno['carrera']}").pack(anchor="w", pady=2)
-        ttk.Label(frame, text=f"Semestre: {alumno['semestre']}").pack(anchor="w", pady=2)
-        ttk.Label(frame, text=f"Correo: {alumno['correo']}").pack(anchor="w", pady=2)
+        """Para mostrar los datos de un alumno en pantalla"""
+        ttk.Label(
+            frame, text=f"ID: {alumno['id']}"
+        ).pack(anchor="w", pady=2)
+        ttk.Label(
+            frame, text=f"Nombre: {alumno['nombre']}"
+        ).pack(anchor="w", pady=2)
+        ttk.Label(
+            frame, text=f"Carrera: {alumno['carrera']}"
+        ).pack(anchor="w", pady=2)
+        ttk.Label(
+            frame, text=f"Semestre: {alumno['semestre']}"
+        ).pack(anchor="w", pady=2)
+        ttk.Label(
+            frame, text=f"Correo: {alumno['correo']}"
+        ).pack(anchor="w", pady=2)
 
     def construir_ventana_principal(self):
-        ttk.Label(self.root, text="Registro de estudiantes", style="Titulo.TLabel").pack(padx=30, pady=30)
+        """Para hacer la ventana principal"""
+        ttk.Label(
+            self.root, text="Registro de estudiantes", style="Titulo.TLabel"
+        ).pack(padx=30, pady=30)
         ttk.Label(self.root, text="¿Qué desea hacer?").pack(padx=20, pady=10)
 
         botones = ttk.Frame(self.root)
         botones.pack(pady=10)
 
-        ttk.Button(botones, text="Guardar", width=12, command=self.abrir_guardar).grid(row=0, column=0, padx=5)
-        ttk.Button(botones, text="Buscar", width=12, command=self.abrir_buscar).grid(row=0, column=1, padx=5)
-        ttk.Button(botones, text="Eliminar", width=12, command=self.abrir_eliminar).grid(row=0, column=2, padx=5)
-        ttk.Button(botones, text="Imprimir", width=12, command=self.abrir_imprimir).grid(row=0, column=3, padx=5)
-        ttk.Button(botones, text="Salir", width=12, command=self.salir).grid(row=0, column=4, padx=5)
+        ttk.Button(
+            botones, text="Guardar", width=12, command=self.abrir_guardar
+        ).grid(row=0, column=0, padx=5)
+        ttk.Button(
+            botones, text="Buscar", width=12, command=self.abrir_buscar
+        ).grid(row=0, column=1, padx=5)
+        ttk.Button(
+            botones, text="Eliminar", width=12, command=self.abrir_eliminar
+        ).grid(row=0, column=2, padx=5)
+        ttk.Button(
+            botones, text="Imprimir", width=12, command=self.abrir_imprimir
+        ).grid(row=0, column=3, padx=5)
+        ttk.Button(
+            botones, text="Salir", width=12, command=self.salir
+        ).grid(row=0, column=4, padx=5)
 
     def salir(self):
+        """Para salir de toda la aplicación"""
         if messagebox.askyesno("Salir", "¿Desea salir de la aplicación?"):
             self.root.destroy()
 
     def abrir_guardar(self):
-        ventana_guardar = self.crear_ventana(self.root, "Registro de estudiantes", 700, 480)
+        """Para abrir la ventana de guardar"""
+        ventana_guardar = self.crear_ventana(
+            self.root, "Registro de estudiantes", 700, 480
+        )
 
         campos = [
             ("id", "ID IEST"),
@@ -114,52 +143,75 @@ class AppEstudiantes:
         entradas = {}
 
         def leer_campos():
-            datos = {clave: entradas[clave].get().strip() for clave, _ in campos}
+            """Para leer los datos y verificar que no haya campos vacios"""
+            datos = {
+                clave: entradas[clave].get().strip() for clave, _ in campos
+            }
             if "" in datos.values():
-                messagebox.showwarning("Datos incompletos", "Llena todos los campos.", parent=ventana_guardar)
+                messagebox.showwarning(
+                    "Datos incompletos", "Llena todos los campos.", parent=ventana_guardar
+                )
                 return None
             return datos
 
         def limpiar():
+            """Borrar lo escrito"""
             for clave, _ in campos:
                 entradas[clave].delete(0, tk.END)
             entradas["id"].focus()
 
         def agregar():
+            """Agregar un alumno"""
             datos = leer_campos()
             if datos is None:
                 return
-            if messagebox.askyesno("Confirmar", "¿Desea agregar a este alumno?", parent=ventana_guardar):
+            if messagebox.askyesno(
+                "Confirmar", "¿Desea agregar a este alumno?", parent=ventana_guardar
+            ):
                 self.gestor.agregar_alumno(datos)
-                messagebox.showinfo("Operación exitosa", "¡Alumno agregado correctamente!", parent=ventana_guardar)
+                messagebox.showinfo(
+                    "Operación exitosa", "¡Alumno agregado correctamente!", parent=ventana_guardar
+                )
             limpiar()
 
         def salir_guardar():
-            if not messagebox.askyesno("Salir", "¿Está seguro de que quiere salir?", parent=ventana_guardar):
+            """Salir de la ventana guardar"""
+            if not messagebox.askyesno(
+                "Salir", "¿Está seguro de que quiere salir?", parent=ventana_guardar
+            ):
                 return
 
-            hay_texto = any(entradas[clave].get().strip() != "" for clave, _ in campos)
+            hay_texto = any(
+                entradas[clave].get().strip() != "" for clave, _ in campos
+            )
             if not hay_texto:
                 ventana_guardar.destroy()
                 return
 
             salir_confirmado = messagebox.askyesno(
                 "Datos sin guardar",
-                "Tienes datos escritos que no se han guardado.\n¿Está seguro de que desea salir y perder los cambios?",
+                "Tienes datos escritos que no se han guardado.\n"
+                "¿Está seguro de que desea salir y perder los cambios?",
                 parent=ventana_guardar,
             )
             if salir_confirmado:
                 ventana_guardar.destroy()
 
-        ttk.Label(ventana_guardar, text="Registro de estudiantes", style="Titulo.TLabel").pack(padx=20, pady=20)
+        ttk.Label(
+            ventana_guardar, text="Registro de estudiantes", style="Titulo.TLabel"
+        ).pack(padx=20, pady=20)
 
         formulario = ttk.Frame(ventana_guardar)
         formulario.pack(padx=30, pady=10)
 
         for fila, (clave, texto) in enumerate(campos):
-            ttk.Label(formulario, text=f"{texto}:").grid(row=fila, column=0, sticky="e", padx=5, pady=8)
+            ttk.Label(
+                formulario, text=f"{texto}:"
+            ).grid(row=fila, column=0, sticky="e", padx=5, pady=8)
             if clave == "semestre":
-                entradas[clave] = ttk.Combobox(formulario, values=list(range(1, 13)), width=57)
+                entradas[clave] = ttk.Combobox(
+                    formulario, values=list(range(1, 13)), width=57
+                )
             else:
                 entradas[clave] = ttk.Entry(formulario, width=60)
             entradas[clave].grid(row=fila, column=1, padx=5, pady=8)
@@ -167,20 +219,31 @@ class AppEstudiantes:
         botones_guardar = ttk.Frame(ventana_guardar)
         botones_guardar.pack(pady=20)
 
-        ttk.Button(botones_guardar, text="Agregar", width=12, command=agregar).grid(row=0, column=0, padx=5)
-        ttk.Button(botones_guardar, text="Limpiar", width=12, command=limpiar).grid(row=0, column=1, padx=5)
-        ttk.Button(botones_guardar, text="Salir", width=12, command=salir_guardar).grid(row=0, column=2, padx=5)
+        ttk.Button(
+            botones_guardar, text="Agregar", width=12, command=agregar
+        ).grid(row=0, column=0, padx=5)
+        ttk.Button(
+            botones_guardar, text="Limpiar", width=12, command=limpiar
+        ).grid(row=0, column=1, padx=5)
+        ttk.Button(
+            botones_guardar, text="Salir", width=12, command=salir_guardar
+        ).grid(row=0, column=2, padx=5)
 
         ventana_guardar.bind("<Return>", lambda e: agregar())
         entradas["id"].focus()
 
     def abrir_buscar(self):
-        ventana_buscar = self.crear_ventana(self.root, "Buscar estudiante", 520, 200)
+        """Para poder buscar un estudiante"""
+        ventana_buscar = self.crear_ventana(
+            self.root, "Buscar estudiante", 520, 200
+        )
 
         formulario = ttk.Frame(ventana_buscar)
         formulario.pack(padx=30, pady=30)
 
-        ttk.Label(formulario, text="ID del estudiante:").grid(row=0, column=0, sticky="e", padx=5, pady=5)
+        ttk.Label(
+            formulario, text="ID del estudiante:"
+        ).grid(row=0, column=0, sticky="e", padx=5, pady=5)
         entrada_id_buscar = ttk.Entry(formulario, width=30)
         entrada_id_buscar.grid(row=0, column=1, padx=5, pady=5)
         entrada_id_buscar.focus()
@@ -188,38 +251,55 @@ class AppEstudiantes:
         def ejecutar_buscar():
             id_buscado = entrada_id_buscar.get().strip()
             if id_buscado == "":
-                messagebox.showwarning("Campo vacío", "Ingresa un ID para buscar.", parent=ventana_buscar)
+                messagebox.showwarning(
+                    "Campo vacío", "Ingresa un ID para buscar.", parent=ventana_buscar
+                )
                 return
 
             _, alumno_encontrado = self.gestor.buscar_por_id(id_buscado)
 
             if alumno_encontrado:
-                messagebox.showinfo("¡Operación exitosa!", "Estudiante encontrado", parent=ventana_buscar)
-                ventana_resultado = self.crear_ventana(ventana_buscar, "Resultado de la búsqueda", 380, 320)
+                messagebox.showinfo(
+                    "¡Operación exitosa!", "Estudiante encontrado", parent=ventana_buscar
+                )
+                ventana_resultado = self.crear_ventana(
+                    ventana_buscar, "Resultado de la búsqueda", 380, 320
+                )
 
-                ttk.Label(ventana_resultado, text="¡Estudiante encontrado!", style="Titulo.TLabel").pack(pady=15)
+                ttk.Label(
+                    ventana_resultado, text="¡Estudiante encontrado!", style="Titulo.TLabel"
+                ).pack(pady=15)
 
                 info_frame = ttk.Frame(ventana_resultado)
                 info_frame.pack(padx=20, pady=5, anchor="w")
                 self.mostrar_datos(info_frame, alumno_encontrado)
 
                 ttk.Button(
-                    ventana_resultado, text="Cerrar", width=10, command=ventana_resultado.destroy
+                    ventana_resultado, text="Cerrar", width=10, 
+                    command=ventana_resultado.destroy
                 ).pack(pady=15)
             else:
                 messagebox.showerror(
-                    "No encontrado", "No se encontró ningún estudiante con ese ID.", parent=ventana_buscar
+                    "No encontrado", 
+                    "No se encontró ningún estudiante con ese ID.", 
+                    parent=ventana_buscar
                 )
 
         def salir_buscar():
-            if messagebox.askyesno("Salir", "¿Desea salir de la búsqueda?", parent=ventana_buscar):
+            if messagebox.askyesno(
+                "Salir", "¿Desea salir de la búsqueda?", parent=ventana_buscar
+            ):
                 ventana_buscar.destroy()
 
         botones_buscar = ttk.Frame(ventana_buscar)
         botones_buscar.pack(pady=10)
 
-        ttk.Button(botones_buscar, text="Buscar", width=12, command=ejecutar_buscar).grid(row=0, column=0, padx=5)
-        ttk.Button(botones_buscar, text="Cerrar", width=12, command=salir_buscar).grid(row=0, column=1, padx=5)
+        ttk.Button(
+            botones_buscar, text="Buscar", width=12, command=ejecutar_buscar
+        ).grid(row=0, column=0, padx=5)
+        ttk.Button(
+            botones_buscar, text="Cerrar", width=12, command=salir_buscar
+        ).grid(row=0, column=1, padx=5)
 
         ventana_buscar.bind("<Return>", lambda e: ejecutar_buscar())
 
