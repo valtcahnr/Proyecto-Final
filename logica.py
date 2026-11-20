@@ -1,4 +1,4 @@
-""""Logica"""
+""""Lógica."""
 
 #El cuerpo
 
@@ -7,6 +7,8 @@ import os
 
 
 class GestorAlumnos:
+    """Para definir la clase responsable de la lógica."""
+
     def __init__(self, nombre_archivo="alumnos.json"):
         base_dir = os.path.dirname(os.path.abspath(__file__))
         self.archivo_json = os.path.join(base_dir, nombre_archivo)
