@@ -7,7 +7,7 @@ from tkinter import ttk, messagebox, filedialog
 
 
 class AppEstudiantes:
-    """Configuración visual"""
+    """Configuración visual."""
     COLOR_FONDO = "#f4f6fb"
     COLOR_PRIMARIO = "#2f5bea"
     COLOR_PRIMARIO_HOVER = "#1e43c4"
@@ -20,7 +20,7 @@ class AppEstudiantes:
     FUENTE_TITULO = ("Segoe UI", 14, "bold")
 
     def __init__(self, root, gestor):
-        """Conecta la ventana a gestor"""
+        """Conecta la ventana a gestor."""
         self.root = root
         self.gestor = gestor
 
@@ -30,17 +30,17 @@ class AppEstudiantes:
         self.construir_ventana_principal()
 
     def configurar_estilos(self, win):
-        """Configura la apariencia"""
+        """Configura la apariencia."""
         win.configure(bg=self.COLOR_FONDO)
         estilo = ttk.Style(win)
         estilo.theme_use("clam")
 
-        estilo.configure(".", background=self.COLOR_FONDO, 
-                         foreground=self.COLOR_TEXTO, 
-                         font=self.FUENTE)
-        estilo.configure("Titulo.TLabel", 
-                         font=self.FUENTE_TITULO, 
-                         foreground=self.COLOR_TITULO)
+        estilo.configure(
+            ".", background=self.COLOR_FONDO, foreground=self.COLOR_TEXTO, font=self.FUENTE
+        )
+        estilo.configure(
+            "Titulo.TLabel", font=self.FUENTE_TITULO, foreground=self.COLOR_TITULO
+        )
 
         estilo.configure(
             "TButton",
@@ -64,13 +64,13 @@ class AppEstudiantes:
 
     @staticmethod
     def centrar(win, ancho, alto):
-        """Centra las ventanas en el monitor"""
+        """Centra las ventanas en el monitor."""
         x = (win.winfo_screenwidth() - ancho) // 2
         y = (win.winfo_screenheight() - alto) // 2
         win.geometry(f"{ancho}x{alto}+{x}+{y}")
 
     def crear_ventana(self, padre, titulo, ancho, alto):
-        """Para las ventanas sin estar repitiendo la configuración"""
+        """Para las ventanas sin estar repitiendo la configuración."""
         win = tk.Toplevel(padre)
         win.title(titulo)
         win.configure(bg=self.COLOR_FONDO)
@@ -79,7 +79,7 @@ class AppEstudiantes:
 
     @staticmethod
     def mostrar_datos(frame, alumno):
-        """Para mostrar los datos de un alumno en pantalla"""
+        """Para mostrar los datos de un alumno en pantalla."""
         ttk.Label(
             frame, text=f"ID: {alumno['id']}"
         ).pack(anchor="w", pady=2)
@@ -97,7 +97,7 @@ class AppEstudiantes:
         ).pack(anchor="w", pady=2)
 
     def construir_ventana_principal(self):
-        """Para hacer la ventana principal"""
+        """Para hacer la ventana principal."""
         ttk.Label(
             self.root, text="Registro de estudiantes", style="Titulo.TLabel"
         ).pack(padx=30, pady=30)
@@ -123,12 +123,12 @@ class AppEstudiantes:
         ).grid(row=0, column=4, padx=5)
 
     def salir(self):
-        """Para salir de toda la aplicación"""
+        """Para salir de toda la aplicación."""
         if messagebox.askyesno("Salir", "¿Desea salir de la aplicación?"):
             self.root.destroy()
 
     def abrir_guardar(self):
-        """Para abrir la ventana de guardar"""
+        """Para abrir la ventana de guardar."""
         ventana_guardar = self.crear_ventana(
             self.root, "Registro de estudiantes", 700, 480
         )
@@ -143,7 +143,7 @@ class AppEstudiantes:
         entradas = {}
 
         def leer_campos():
-            """Para leer los datos y verificar que no haya campos vacios"""
+            """Para leer los datos y verificar que no haya campos vacios."""
             datos = {
                 clave: entradas[clave].get().strip() for clave, _ in campos
             }
@@ -155,13 +155,13 @@ class AppEstudiantes:
             return datos
 
         def limpiar():
-            """Borrar lo escrito"""
+            """Borrar lo escrito."""
             for clave, _ in campos:
                 entradas[clave].delete(0, tk.END)
             entradas["id"].focus()
 
         def agregar():
-            """Agregar un alumno"""
+            """Agregar un alumno."""
             datos = leer_campos()
             if datos is None:
                 return
@@ -175,7 +175,7 @@ class AppEstudiantes:
             limpiar()
 
         def salir_guardar():
-            """Salir de la ventana guardar"""
+            """Salir de la ventana guardar."""
             if not messagebox.askyesno(
                 "Salir", "¿Está seguro de que quiere salir?", parent=ventana_guardar
             ):
@@ -233,7 +233,7 @@ class AppEstudiantes:
         entradas["id"].focus()
 
     def abrir_buscar(self):
-        """Para poder buscar un estudiante"""
+        """Para poder buscar un estudiante."""
         ventana_buscar = self.crear_ventana(
             self.root, "Buscar estudiante", 520, 200
         )
