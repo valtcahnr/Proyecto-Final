@@ -8,6 +8,7 @@ from tkinter import ttk, messagebox, filedialog
 
 class AppEstudiantes:
     """Configuración visual."""
+
     COLOR_FONDO = "#f4f6fb"
     COLOR_PRIMARIO = "#2f5bea"
     COLOR_PRIMARIO_HOVER = "#1e43c4"
@@ -55,13 +56,13 @@ class AppEstudiantes:
             borderwidth=0,
             focuscolor=self.COLOR_PRIMARIO,
         )
-        estilo.map("TButton", 
-                   background=[("active", 
+        estilo.map("TButton",
+                   background=[("active",
                                 self.COLOR_PRIMARIO_HOVER)])
 
         estilo.configure("Peligro.TButton", background=self.COLOR_PELIGRO)
-        estilo.map("Peligro.TButton", 
-                   background=[("active", 
+        estilo.map("Peligro.TButton",
+                   background=[("active",
                                 self.COLOR_PELIGRO_HOVER)])
 
         estilo.configure("TEntry", padding=6)
@@ -139,8 +140,8 @@ class AppEstudiantes:
         ).grid(row=0, column=3, padx=5)
         ttk.Button(
             botones,
-            text="Salir", 
-            width=12, 
+            text="Salir",
+            width=12,
             command=self.salir
         ).grid(row=0, column=4, padx=5)
 
@@ -171,7 +172,9 @@ class AppEstudiantes:
             }
             if "" in datos.values():
                 messagebox.showwarning(
-                    "Datos incompletos", "Llena todos los campos.", parent=ventana_guardar
+                    "Datos incompletos",
+                    "Llena todos los campos.",
+                    parent=ventana_guardar
                 )
                 return None
             return datos
