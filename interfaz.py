@@ -36,10 +36,15 @@ class AppEstudiantes:
         estilo.theme_use("clam")
 
         estilo.configure(
-            ".", background=self.COLOR_FONDO, foreground=self.COLOR_TEXTO, font=self.FUENTE
+            ".",
+            background=self.COLOR_FONDO,
+            foreground=self.COLOR_TEXTO,
+            font=self.FUENTE
         )
         estilo.configure(
-            "Titulo.TLabel", font=self.FUENTE_TITULO, foreground=self.COLOR_TITULO
+            "Titulo.TLabel",
+            font=self.FUENTE_TITULO,
+            foreground=self.COLOR_TITULO
         )
 
         estilo.configure(
@@ -99,7 +104,9 @@ class AppEstudiantes:
     def construir_ventana_principal(self):
         """Para hacer la ventana principal."""
         ttk.Label(
-            self.root, text="Registro de estudiantes", style="Titulo.TLabel"
+            self.root,
+            text="Registro de estudiantes",
+            style="Titulo.TLabel"
         ).pack(padx=30, pady=30)
         ttk.Label(self.root, text="¿Qué desea hacer?").pack(padx=20, pady=10)
 
@@ -107,19 +114,34 @@ class AppEstudiantes:
         botones.pack(pady=10)
 
         ttk.Button(
-            botones, text="Guardar", width=12, command=self.abrir_guardar
+            botones,
+            text="Guardar",
+            width=12,
+            command=self.abrir_guardar
         ).grid(row=0, column=0, padx=5)
         ttk.Button(
-            botones, text="Buscar", width=12, command=self.abrir_buscar
+            botones,
+            text="Buscar",
+            width=12,
+            command=self.abrir_buscar
         ).grid(row=0, column=1, padx=5)
         ttk.Button(
-            botones, text="Eliminar", width=12, command=self.abrir_eliminar
+            botones,
+            text="Eliminar",
+            width=12,
+            command=self.abrir_eliminar
         ).grid(row=0, column=2, padx=5)
         ttk.Button(
-            botones, text="Imprimir", width=12, command=self.abrir_imprimir
+            botones,
+            text="Imprimir",
+            width=12,
+            command=self.abrir_imprimir
         ).grid(row=0, column=3, padx=5)
         ttk.Button(
-            botones, text="Salir", width=12, command=self.salir
+            botones,
+            text="Salir", 
+            width=12, 
+            command=self.salir
         ).grid(row=0, column=4, padx=5)
 
     def salir(self):
@@ -166,18 +188,24 @@ class AppEstudiantes:
             if datos is None:
                 return
             if messagebox.askyesno(
-                "Confirmar", "¿Desea agregar a este alumno?", parent=ventana_guardar
+                "Confirmar",
+                "¿Desea agregar a este alumno?",
+                parent=ventana_guardar
             ):
                 self.gestor.agregar_alumno(datos)
                 messagebox.showinfo(
-                    "Operación exitosa", "¡Alumno agregado correctamente!", parent=ventana_guardar
+                    "Operación exitosa",
+                    "¡Alumno agregado correctamente!",
+                    parent=ventana_guardar
                 )
             limpiar()
 
         def salir_guardar():
             """Salir de la ventana guardar."""
             if not messagebox.askyesno(
-                "Salir", "¿Está seguro de que quiere salir?", parent=ventana_guardar
+                "Salir",
+                "¿Está seguro de que quiere salir?",
+                parent=ventana_guardar
             ):
                 return
 
@@ -220,13 +248,22 @@ class AppEstudiantes:
         botones_guardar.pack(pady=20)
 
         ttk.Button(
-            botones_guardar, text="Agregar", width=12, command=agregar
+            botones_guardar,
+            text="Agregar",
+            width=12,
+            command=agregar
         ).grid(row=0, column=0, padx=5)
         ttk.Button(
-            botones_guardar, text="Limpiar", width=12, command=limpiar
+            botones_guardar,
+            text="Limpiar",
+            width=12,
+            command=limpiar
         ).grid(row=0, column=1, padx=5)
         ttk.Button(
-            botones_guardar, text="Salir", width=12, command=salir_guardar
+            botones_guardar,
+            text="Salir",
+            width=12,
+            command=salir_guardar
         ).grid(row=0, column=2, padx=5)
 
         ventana_guardar.bind("<Return>", lambda e: agregar())
@@ -249,10 +286,13 @@ class AppEstudiantes:
         entrada_id_buscar.focus()
 
         def ejecutar_buscar():
+            """Para buscar un alumno."""
             id_buscado = entrada_id_buscar.get().strip()
             if id_buscado == "":
                 messagebox.showwarning(
-                    "Campo vacío", "Ingresa un ID para buscar.", parent=ventana_buscar
+                    "Campo vacío",
+                    "Ingresa un ID para buscar.",
+                    parent=ventana_buscar
                 )
                 return
 
@@ -260,14 +300,18 @@ class AppEstudiantes:
 
             if alumno_encontrado:
                 messagebox.showinfo(
-                    "¡Operación exitosa!", "Estudiante encontrado", parent=ventana_buscar
+                    "¡Operación exitosa!",
+                    "Estudiante encontrado",
+                    parent=ventana_buscar
                 )
                 ventana_resultado = self.crear_ventana(
                     ventana_buscar, "Resultado de la búsqueda", 380, 320
                 )
 
                 ttk.Label(
-                    ventana_resultado, text="¡Estudiante encontrado!", style="Titulo.TLabel"
+                    ventana_resultado,
+                    text="¡Estudiante encontrado!",
+                    style="Titulo.TLabel"
                 ).pack(pady=15)
 
                 info_frame = ttk.Frame(ventana_resultado)
@@ -280,14 +324,17 @@ class AppEstudiantes:
                 ).pack(pady=15)
             else:
                 messagebox.showerror(
-                    "No encontrado", 
-                    "No se encontró ningún estudiante con ese ID.", 
+                    "No encontrado",
+                    "No se encontró ningún estudiante con ese ID.",
                     parent=ventana_buscar
                 )
 
         def salir_buscar():
+            """Para salir de la ventana de buscar."""
             if messagebox.askyesno(
-                "Salir", "¿Desea salir de la búsqueda?", parent=ventana_buscar
+                "Salir",
+                "¿Desea salir de la búsqueda?",
+                parent=ventana_buscar
             ):
                 ventana_buscar.destroy()
 
@@ -295,47 +342,80 @@ class AppEstudiantes:
         botones_buscar.pack(pady=10)
 
         ttk.Button(
-            botones_buscar, text="Buscar", width=12, command=ejecutar_buscar
+            botones_buscar,
+            text="Buscar",
+            width=12,
+            command=ejecutar_buscar
         ).grid(row=0, column=0, padx=5)
         ttk.Button(
-            botones_buscar, text="Cerrar", width=12, command=salir_buscar
+            botones_buscar,
+            text="Cerrar",
+            width=12,
+            command=salir_buscar
         ).grid(row=0, column=1, padx=5)
 
         ventana_buscar.bind("<Return>", lambda e: ejecutar_buscar())
 
     def abrir_eliminar(self):
-        ventana_eliminar = self.crear_ventana(self.root, "Eliminar estudiante", 560, 190)
+        """Para abrir la ventana eliminar."""
+        ventana_eliminar = self.crear_ventana(
+            self.root, "Eliminar estudiante", 560, 190
+        )
 
         formulario = ttk.Frame(ventana_eliminar)
         formulario.pack(padx=30, pady=30)
 
-        ttk.Label(formulario, text="ID del estudiante a eliminar:").grid(row=0, column=0, sticky="e", padx=5, pady=5)
+        ttk.Label(
+            formulario,
+            text="ID del estudiante a eliminar:"
+        ).grid(
+            row=0, column=0, sticky="e", padx=5, pady=5
+        )
         entrada_id_buscar_e = ttk.Entry(formulario, width=30)
         entrada_id_buscar_e.grid(row=0, column=1, padx=5, pady=5)
         entrada_id_buscar_e.focus()
 
         def ejecutar_buscar():
+            """Para buscar un alumno en la ventana de eliminar."""
             id_buscado = entrada_id_buscar_e.get().strip()
             if id_buscado == "":
-                messagebox.showwarning("Campo vacío", "Ingresa un ID para buscar.", parent=ventana_eliminar)
+                messagebox.showwarning(
+                    "Campo vacío",
+                    "Ingresa un ID para buscar.",
+                    parent=ventana_eliminar
+                )
                 return
 
             indice_e, alumno_encontrado_e = self.gestor.buscar_por_id(id_buscado)
 
             if alumno_encontrado_e:
-                messagebox.showinfo("Estudiante", "Estudiante encontrado", parent=ventana_eliminar)
-                ventana_resultado_e = self.crear_ventana(ventana_eliminar, "Eliminar", 380, 330)
+                messagebox.showinfo(
+                    "Estudiante",
+                    "Estudiante encontrado",
+                    parent=ventana_eliminar
+                )
+                ventana_resultado_e = self.crear_ventana(
+                    ventana_eliminar,
+                    "Eliminar",
+                    380, 330
+                )
 
-                ttk.Label(ventana_resultado_e, text="Estudiante a eliminar", style="Titulo.TLabel").pack(pady=15)
+                ttk.Label(
+                    ventana_resultado_e,
+                    text="Estudiante a eliminar",
+                    style="Titulo.TLabel"
+                ).pack(pady=15)
 
                 info_frame = ttk.Frame(ventana_resultado_e)
                 info_frame.pack(padx=20, pady=5, anchor="w")
                 self.mostrar_datos(info_frame, alumno_encontrado_e)
 
                 def eliminar_alumno():
+                    """Para eliminar un alumno del sistema"""
                     if messagebox.askyesno(
                         "Confirmar",
-                        "¿Está completamente seguro de eliminar a este estudiante?\nLos datos se perderán de manera permanente.",
+                        "¿Está completamente seguro de eliminar a este estudiante?\n"
+                        "Los datos se perderán de manera permanente.",
                         parent=ventana_resultado_e,
                     ):
                         self.gestor.eliminar_por_indice(indice_e)
@@ -358,31 +438,60 @@ class AppEstudiantes:
                     command=eliminar_alumno,
                 ).grid(row=0, column=0, padx=5)
                 ttk.Button(
-                    botones_resultado_e, text="Cerrar", width=12, command=ventana_resultado_e.destroy
+                    botones_resultado_e,
+                    text="Cerrar",
+                    width=12,
+                    command=ventana_resultado_e.destroy
                 ).grid(row=0, column=1, padx=5)
             else:
                 messagebox.showerror(
-                    "Error", "No se encontró ningún estudiante con ese ID.", parent=ventana_eliminar
+                    "Error",
+                    "No se encontró ningún estudiante con ese ID.",
+                    parent=ventana_eliminar
                 )
 
         def cancelar():
-            if messagebox.askyesno("Salir", "¿Está seguro de que quiere salir?", parent=ventana_eliminar):
+            """Para salir de la ventana de eliminar."""
+            if messagebox.askyesno(
+                "Salir",
+                "¿Está seguro de que quiere salir?",
+                parent=ventana_eliminar
+            ):
                 ventana_eliminar.destroy()
 
         botones_eliminar = ttk.Frame(ventana_eliminar)
         botones_eliminar.pack(pady=10)
 
-        ttk.Button(botones_eliminar, text="Buscar", width=12, command=ejecutar_buscar).grid(row=0, column=0, padx=5)
-        ttk.Button(botones_eliminar, text="Cancelar", width=12, command=cancelar).grid(row=0, column=1, padx=5)
+        ttk.Button(
+            botones_eliminar,
+            text="Buscar",
+            width=12,
+            command=ejecutar_buscar
+        ).grid(row=0, column=0, padx=5)
+        ttk.Button(
+            botones_eliminar,
+            text="Cancelar",
+            width=12,
+            command=cancelar
+        ).grid(row=0, column=1, padx=5)
 
-        ventana_eliminar.bind("<Return>", lambda e: ejecutar_buscar())
+        ventana_eliminar.bind(
+            "<Return>",
+            lambda e: ejecutar_buscar()
+        )
 
     def abrir_imprimir(self):
+        """Para abrir la ventana de imprimir."""
         if not self.gestor.alumnos:
-            messagebox.showwarning("Error", "No hay estudiantes registrados para exportar.", parent=self.root)
+            messagebox.showwarning(
+                "Error",
+                "No hay estudiantes registrados para exportar.",
+                parent=self.root)
             return
 
-        ventana_imprimir = self.crear_ventana(self.root, "Imprimir", 460, 230)
+        ventana_imprimir = self.crear_ventana(
+            self.root, "Imprimir", 460, 230
+        )
 
         formulario = ttk.Frame(ventana_imprimir)
         formulario.pack(padx=30, pady=30)
@@ -394,9 +503,14 @@ class AppEstudiantes:
         ).pack(padx=5, pady=5)
 
         def ejecutar_imprimir():
+            """Para exportar los datos en un archivo de texto."""
             archivo = filedialog.asksaveasfilename(
                 defaultextension=".txt",
-                filetypes=[("Archivos de texto", "*.txt"), ("Todos los archivos", "*.*")],
+                filetypes=[(
+                    "Archivos de texto", "*.txt"
+                ), (
+                    "Todos los archivos", "*.*"
+                )],
                 title="Guardar lista de estudiantes",
                 parent=ventana_imprimir,
             )
@@ -410,14 +524,37 @@ class AppEstudiantes:
                         parent=ventana_imprimir,
                     )
                 except Exception as e:
-                    messagebox.showerror("Error", f"No se pudo guardar el archivo:\n{e}", parent=ventana_imprimir)
+                    messagebox.showerror(
+                        "Error",
+                        f"No se pudo guardar el archivo:\n{e}",
+                        parent=ventana_imprimir)
 
         def cancelar_imprimir():
-            if messagebox.askyesno("Salir", "¿Está seguro de que quiere salir?", parent=ventana_imprimir):
+            """Para cancelar la exportación a texto."""
+            if messagebox.askyesno(
+                "Salir",
+                "¿Está seguro de que quiere salir?",
+                parent=ventana_imprimir
+            ):
                 ventana_imprimir.destroy()
 
         botones_imprimir = ttk.Frame(ventana_imprimir)
         botones_imprimir.pack(pady=10)
 
-        ttk.Button(botones_imprimir, text="Imprimir", width=12, command=ejecutar_imprimir).grid(row=0, column=0, padx=5)
-        ttk.Button(botones_imprimir, text="Cancelar", width=12, command=cancelar_imprimir).grid(row=0, column=1, padx=5)
+        ttk.Button(
+            botones_imprimir,
+            text="Imprimir",
+            width=12,
+            command=ejecutar_imprimir
+        ).grid(
+            row=0, column=0, padx=5
+        )
+        ttk.Button(
+            botones_imprimir,
+            text="Cancelar",
+            width=12,
+            command=cancelar_imprimir
+        ).grid(
+            row=0, column=1, padx=5
+        )
+        
