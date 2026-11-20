@@ -20,8 +20,7 @@ class GestorAlumnos:
         self.alumnos = self.cargar_datos()
 
     def cargar_datos(self):
-        """Para asegurar que los alumnos que se cargaron en ejecuciones anteriores 
-        reaparezcan al abrir la app."""
+        """Para asegurar que los alumnos que se cargaron en ejecuciones anteriores reaparezcan al abrir la app."""
         if not os.path.exists(self.archivo_json):
             return []
         try:
@@ -34,8 +33,7 @@ class GestorAlumnos:
             return []
 
     def guardar_datos(self):
-        """Para guardar los datos 
-        y que no se pierdan al reiniciar el programa."""
+        """Para guardar los datos y que no se pierdan al reiniciar el programa."""
         with open(
             self.archivo_json, "w", encoding="utf-8"
         ) as f:
@@ -54,8 +52,7 @@ class GestorAlumnos:
         return alumno
 
     def agregar_alumno(self, datos):
-        """Formatea, registra y 
-        guarda un nuevo alumno en el JSON."""
+        """Formatea, registra y guarda un nuevo alumno en el JSON."""
         alumno = self.formatear_alumno(datos)
         self.alumnos.append(alumno)
         self.guardar_datos()
