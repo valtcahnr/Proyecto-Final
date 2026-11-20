@@ -1,6 +1,6 @@
-""""Lógica."""
+"""Lógica."""
 
-#El cuerpo
+# El cuerpo
 
 import json
 import os
@@ -9,28 +9,47 @@ import os
 class GestorAlumnos:
     """Para definir la clase responsable de la lógica."""
 
-    def __init__(self, nombre_archivo="alumnos.json"):
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        self.archivo_json = os.path.join(base_dir, nombre_archivo)
+    def __init__(
+        self, nombre_archivo="alumnos.json"
+    ):
+        base_dir = os.path.dirname(
+            os.path.abspath(__file__)
+        )
+        self.archivo_json = os.path.join(
+            base_dir, nombre_archivo
+        )
         self.alumnos = self.cargar_datos()
 
     def cargar_datos(self):
+        """Para asegurar que los alumnos que se cargaron en ejecuciones anteriores 
+        reaparezcan al abrir la app."""
         if not os.path.exists(self.archivo_json):
             return []
         try:
-            with open(self.archivo_json, "r", encoding="utf-8") as f:
+            with open(
+                self.archivo_json, "r", encoding="utf-8"
+            ) as f:
                 datos = json.load(f)
                 return datos if isinstance(datos, list) else []
         except Exception:
             return []
 
     def guardar_datos(self):
-        with open(self.archivo_json, "w", encoding="utf-8") as f:
-            json.dump(self.alumnos, f, ensure_ascii=False, indent=4)
+        """Para guardar los datos 
+        y que no se pierdan al reiniciar el programa."""
+        with open(
+            self.archivo_json, "w", encoding="utf-8"
+        ) as f:
+            json.dump(
+                self.alumnos, f, ensure_ascii=False, indent=4
+            )
 
     @staticmethod
     def formatear_alumno(datos):
-        alumno = {clave: valor.strip() for clave, valor in datos.items()}
+        """Para dar formato a los datos."""
+        alumno = {
+            clave: valor.strip() for clave, valor in datos.items()
+        }
         alumno["nombre"] = alumno["nombre"].title()
         alumno["carrera"] = alumno["carrera"].title()
         return alumno
