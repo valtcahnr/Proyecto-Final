@@ -9,9 +9,8 @@ import os
 class GestorAlumnos:
     """Para definir la clase responsable de la lógica."""
 
-    def __init__(
-        self, nombre_archivo="alumnos.json"
-    ):
+    def __init__(self, nombre_archivo="alumnos.json"):
+        """Inicializa la ruta del JSON y carga los alumnos guardados."""
         base_dir = os.path.dirname(
             os.path.abspath(__file__)
         )
@@ -55,12 +54,15 @@ class GestorAlumnos:
         return alumno
 
     def agregar_alumno(self, datos):
+        """Formatea, registra y 
+        guarda un nuevo alumno en el JSON."""
         alumno = self.formatear_alumno(datos)
         self.alumnos.append(alumno)
         self.guardar_datos()
         return alumno
 
     def buscar_por_id(self, id_buscado):
+        """Para buscar un alumno por su ID."""
         id_limpio = str(id_buscado).strip().lower()
         for indice, alumno in enumerate(self.alumnos):
             if str(alumno.get("id", "")).strip().lower() == id_limpio:
@@ -68,6 +70,7 @@ class GestorAlumnos:
         return -1, None
 
     def eliminar_por_indice(self, indice):
+        """Elimina un alumno por su ID y actualiza el JSON."""
         if 0 <= indice < len(self.alumnos):
             eliminado = self.alumnos.pop(indice)
             self.guardar_datos()
@@ -75,6 +78,7 @@ class GestorAlumnos:
         return None
 
     def exportar_txt(self, ruta_archivo):
+        
         with open(ruta_archivo, "w", encoding="utf-8") as f:
             f.write("=== LISTA DE ESTUDIANTES REGISTRADOS ===\n\n")
             for idx, alumno in enumerate(self.alumnos, 1):
