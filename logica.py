@@ -78,7 +78,7 @@ class GestorAlumnos:
         return None
 
     def exportar_txt(self, ruta_archivo):
-        
+        """Exporta el listado de alumnos a un archivo de texto."""
         with open(ruta_archivo, "w", encoding="utf-8") as f:
             f.write("=== LISTA DE ESTUDIANTES REGISTRADOS ===\n\n")
             for idx, alumno in enumerate(self.alumnos, 1):
