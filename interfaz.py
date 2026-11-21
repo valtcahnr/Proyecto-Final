@@ -506,8 +506,7 @@ class AppEstudiantes:
         ).pack(padx=5, pady=5)
 
         def ejecutar_imprimir():
-            """Para solicitar la ruta de guardado, 
-            exportar el archivo de texto y notificar.""
+            """Para solicitar la ruta de guardado, exportar el archivo de texto y notificar."""
             archivo = filedialog.asksaveasfilename(
                 defaultextension=".txt",
                 filetypes=[(
